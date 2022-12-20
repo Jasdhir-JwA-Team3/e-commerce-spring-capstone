@@ -3,9 +3,7 @@ package com.revature.controllers;
 
 import com.revature.ECommerceApplication;
 import com.revature.dtos.Principal;
-import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.User;
-import com.revature.repositories.UserRepository;
 import com.revature.services.AuthService;
 import com.revature.services.TokenService;
 import com.revature.services.UserService;
@@ -13,20 +11,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -68,7 +62,6 @@ public class AuthControllerTest {
     public String getResetPasswordToken() throws Exception {
         String resetPasswordToken = UUID.randomUUID().toString();
         userService.updateResetPasswordToken(resetPasswordToken, "testuser@gmail.com");
-        System.out.println(resetPasswordToken);
         return resetPasswordToken;
     }
 
@@ -82,7 +75,7 @@ public class AuthControllerTest {
                     "    \"password\": \"password\"\n" +
                     "}")
             .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
 
@@ -130,7 +123,7 @@ public class AuthControllerTest {
                                 "  \"lastName\": \"Jefferson\"\n" +
                                 "}")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath(".email").value("newuser1@gmail.com"))
@@ -147,7 +140,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath(".email").value("testuser@gmail.com"))
@@ -167,7 +160,7 @@ public class AuthControllerTest {
                         "}")
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 
@@ -175,7 +168,7 @@ public class AuthControllerTest {
     public void testResetPasswordGet() throws Exception {
         String resetPasswordToken = getResetPasswordToken();
         mockMvc.perform(get("/auth/reset-password/{token}", resetPasswordToken)
-                ).andDo(print())
+                )
                 .andExpect(status().isOk());
     }
 
@@ -188,7 +181,7 @@ public class AuthControllerTest {
                                 "  \"email\": \"testuser@gmail.com\"\n" +
                                 "}")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 }
