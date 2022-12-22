@@ -10,14 +10,14 @@ spring:
   datasource:
     url: jdbc:h2:mem:memdb
     driver-class-name: org.h2.Driver
-    username: 
-    password: 
+    username: ${{ secrets.MAILUSER }}
+    password: ${{ secrets.MAILPASS }}
   h2:
     console.enabled: true
   mail:
     host: smtp.gmail.com
-    username: 
-    password: 
+    username: ${{ secrets.MAILUSER }}
+    password: ${{ secrets.MAILPASS }}
     port: 465
     properties:
       "mail.smtp.ssl.enable": true
@@ -35,4 +35,4 @@ management:
       exposure:
         include: mappings
 jwt:
-  secret: 
+  secret: ${{ secrets.JWTSECRET }}
