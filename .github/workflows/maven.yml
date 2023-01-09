@@ -26,9 +26,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Test with Maven
-      run: mvn spring-boot:test -Dspring-boot.run.arguments=--JWTSECRET=${{ secrets.JWTSECRET }},--MAILUSER=${{ secrets.MAILUSER }},--MAILPASS=-DMAILPASS=${{ secrets.MAILPASS }}
+      # run: mvn spring-boot:test -Dspring-boot.run.arguments=--JWTSECRET=${{ secrets.JWTSECRET }},--MAILUSER=${{ secrets.MAILUSER }},--MAILPASS=-DMAILPASS=${{ secrets.MAILPASS }}
 
-      # run: mvn -DJWTSECRET= -DMAILUSER=${{ secrets.MAILUSER }} -DMAILPASS=${{ secrets.MAILPASS }} test 
+      run: mvn test -DargLine="-DJWTSECRET=abcdefg -DMAILUSER=${{ secrets.MAILUSER }} -DMAILPASS=${{ secrets.MAILPASS }}"
       
   build:
     runs-on: ubuntu-latest
