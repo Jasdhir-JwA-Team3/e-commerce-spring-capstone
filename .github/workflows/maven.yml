@@ -26,7 +26,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Test with Maven
-      run: mvn test 
+      run: mvn -DJWTSECRET=${{ secret.JWTSECRET }} -DMAILUSER=${{ secret.MAILUSER }} -DMAILPASS=${{ secret.MAILPASS }} test 
       
   build:
     runs-on: ubuntu-latest
